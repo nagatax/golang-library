@@ -1,4 +1,4 @@
-package Utils
+package utils
 
 func Div(x, y int) (int, int) {
 	// 商
