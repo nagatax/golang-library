@@ -7,8 +7,16 @@ GO_OS=$(go env GOOS)
 # Set architecture
 GO_ARCH=$(go env GOARCH)
 
+# Build programs
+bin/%: cmd/%/main.go deps
+	go build -ldflags "$(LDFLAGS)" -o $@ $<
+
+# Clean files
+clean:
+	go clean
+	rm -rf bin/*
+
 # Install external dependencies
-.PHONY: deps
 deps:
 	go get github.com/jstemmer/gotags
 	go get github.com/nsf/gocode
@@ -20,27 +28,22 @@ deps:
 	go get golang.org/x/tools/cmd/gorename
 	go get golang.org/x/tools/cmd/guru
 
-# Run tests
-test: deps
-	go test -cover -v ./...
+# Format Files
+fmt:
+	go fmt ./...
+
+# Show help
+help:
+	@make2help #(MAKEFILE_LIST)
 
 # Run Lint
 lint: deps
 	go vet ./...
 	golint ./...
 
-# Clean files
-clean:
-	go clean
-	rm -rf bin/*
-
-# Build programs
-bin/%: cmd/%/main.go deps
-	go build -ldflags "$(LDFLAGS)" -o $@ $<
-
-# Show help
-help:
-	@make2help #(MAKEFILE_LIST)
+# Run tests
+test: deps
+	go test -cover -v ./...
 
 
-.PHONY: build test link clean help
+.PHONY: clean deps fmt help lint test
