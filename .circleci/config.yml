@@ -1,0 +1,26 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/nagatax/golang-library
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-pkg-cache
+      - save_cache:
+          key: v1-pkg-cache
+          paths:
+            - "/go/pkg"
+      # Check coding style
+      - run: make lint
+      - run: make test
+      #      - run: curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s
+      #      - run: ./vendor/bin/phpcs --standard=./phpcs_custom_ruleset.xml | ./bin/reviewdog -f=phpstan -reporter=github-pr-review
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build
