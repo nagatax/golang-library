@@ -11,10 +11,10 @@ GO_ARCH=$(go env GOARCH)
 .PHONY: deps
 deps:
 	go get github.com/jstemmer/gotags
-	go get github.com/golang/lint/golint
 	go get github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
 	go get github.com/stretchr/testify
+	go get golang.org/x/lint/golint
 	go get golang.org/x/tools/cmd/godoc
 	go get golang.org/x/tools/cmd/goimports
 	go get golang.org/x/tools/cmd/gorename
@@ -25,7 +25,7 @@ test: deps
 	go test -cover -v ./...
 
 # Run Lint
-lint:
+lint: deps
 	go vet ./...
 	golint ./...
 
