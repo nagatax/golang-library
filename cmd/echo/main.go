@@ -8,10 +8,15 @@ import (
 func main() {
 
 	// print command line arguments
-	length := len(os.Args)
-	for i := 1; i < length; i++ {
-		fmt.Printf("%v ", os.Args[i])
+	var (
+		args = ""
+		length = len(os.Args)
+		startingArgs = 1
+	)
+	for i := startingArgs; i < length; i++ {
+		args += os.Args[i]
 	}
+	fmt.Printf("%v ", args)
 
 	// print line feed code
 	fmt.Println()
