@@ -7,34 +7,36 @@ GO_OS=$(go env GOOS)
 # Set architecture
 GO_ARCH=$(go env GOARCH)
 
+# Install development tools
+devtools:
+	go get -u github.com/golang/dep/cmd/dep
+	go get -u github.com/jstemmer/gotags
+	go get -u github.com/nsf/gocode
+	go get -u github.com/rogpeppe/godef
+
+# Install go tools
+gotools:
+	go get -u golang.org/x/lint/golint
+	go get -u golang.org/x/tools/cmd/godoc
+	go get -u golang.org/x/tools/cmd/goimports
+	go get -u golang.org/x/tools/cmd/gorename
+	go get -u golang.org/x/tools/cmd/guru
+
+# Init project
+init:
+	dep init
+
+# Install external dependencies
+deps:
+	dep ensure -vendor-only
+
 # Build programs
 bin/%: cmd/%/main.go deps
 	go build -ldflags "$(LDFLAGS)" -o $@ $<
 
-# Clean files
-clean:
-	go clean
-	rm -rf bin/*
-
-# Install external dependencies
-deps:
-	go get github.com/jstemmer/gotags
-	go get github.com/nsf/gocode
-	go get github.com/rogpeppe/godef
-	go get github.com/stretchr/testify
-	go get golang.org/x/lint/golint
-	go get golang.org/x/tools/cmd/godoc
-	go get golang.org/x/tools/cmd/goimports
-	go get golang.org/x/tools/cmd/gorename
-	go get golang.org/x/tools/cmd/guru
-
 # Format Files
 fmt:
 	go fmt ./...
-
-# Show help
-help:
-	@make2help #(MAKEFILE_LIST)
 
 # Run Lint
 lint: deps
@@ -45,5 +47,13 @@ lint: deps
 test: deps
 	go test -cover -v ./...
 
+# Show help
+help:
+	@make2help #(MAKEFILE_LIST)
 
-.PHONY: clean deps fmt help lint test
+# Clean files
+clean:
+	go clean
+	rm -rf bin/*
+
+.PHONY: devtools gotools init deps fmt lint test help clean
