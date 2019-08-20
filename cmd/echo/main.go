@@ -9,8 +9,8 @@ func main() {
 
 	// print command line arguments
 	var (
-		args = ""
-		length = len(os.Args)
+		args         = ""
+		length       = len(os.Args)
 		startingArgs = 1
 	)
 	for i := startingArgs; i < length; i++ {
