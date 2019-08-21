@@ -1,45 +1,42 @@
-# Set Project Name
-NAME=golang-library
-# Set Go version
-GO_VERSION=$(go version)
-# Set OS
-GO_OS=$(go env GOOS)
-# Set architecture
-GO_ARCH=$(go env GOARCH)
+# Set meta information
+NAME:=golang-library
+VERSION:=$(gobump show -r)
+REVISION:=$(shell git rev-parse --short HEAD)
+LDFLAGS:="-X main.revision=$(REVISION)"
+
+export GO111MODULE=on
 
 # Install development tools
 devtools:
-	# Dependency management tool
-	go get github.com/golang/dep/cmd/dep
-	# Manage remote repository clones
-	go get github.com/motemen/ghq
-	# gore
-	go get github.com/motemen/gore/cmd/gore
-	go get github.com/k0kubun/pp
-	go get github.com/mdempsky/gocode
-	go get github.com/rogpeppe/godef
-	go get github.com/jstemmer/gotags
+	GO111MODULE=off \
+				go get github.com/motemen/ghq \
+				github.com/motemen/gore/cmd/gore \
+				github.com/k0kubun/pp \
+				github.com/mdempsky/gocode \
+				github.com/rogpeppe/godef \
+				github.com/jstemmer/gotags \
+				github.com/motemen/gobump/cmd/gobump \
+				github.com/Songmu/make2help/cmd/make2help
 
 # Install go tools
 gotools:
-	go get golang.org/x/lint/golint
-	go get golang.org/x/tools/cmd/godoc
-	go get golang.org/x/tools/cmd/goimports
-	go get golang.org/x/tools/cmd/gorename
-	go get golang.org/x/tools/cmd/guru
-	go get golang.org/x/tools/cmd/gopls
+	GO111MODULE=off \
+				go get golang.org/x/lint/golint \
+				golang.org/x/tools/cmd/godoc \
+				golang.org/x/tools/cmd/goimports \
+				golang.org/x/tools/cmd/gorename \
+				golang.org/x/tools/cmd/guru \
+				golang.org/x/tools/cmd/gopls
 
-# Init project
-init:
-	dep init
-
-# Install external dependencies
+# Install dependencies
 deps:
-	dep ensure -vendor-only
+	go get -v -d
 
 # Build programs
 bin/%: cmd/%/main.go deps
-	go build -ldflags "$(LDFLAGS)" -o $@ $<
+	go build -ldflags $(LDFLAGS) -o $@ $<
+
+build: bin/myprof
 
 # Format Files
 fmt:
@@ -48,7 +45,7 @@ fmt:
 # Run Lint
 lint: deps
 	go vet ./cmd/...
-	golint ./cmd/...
+	golint -set_exit_status ./cmd/...
 
 # Run tests
 test: deps
@@ -59,7 +56,7 @@ doc:
 
 # Show help
 help:
-	@make2help #(MAKEFILE_LIST)
+	@make2help $(MAKEFILE_LIST)
 
 # Clean files
 clean:
