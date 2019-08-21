@@ -3,9 +3,24 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/nagatax/golang-library/utils"
+)
+
+const (
+	Version = "0.0.1"
+)
+
+var (
+	revision string
 )
 
 func main() {
+	// print version
+	if utils.IsPrintVersion(os.Args[1:]...) {
+		utils.PrintVersion(Version)
+		return
+	}
 
 	// print command line arguments
 	var (
