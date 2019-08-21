@@ -1,10 +1,15 @@
 # Set meta information
 NAME:=golang-library
+PROJECT_PATH=github.com/nagatax/$(NAME)
 VERSION:=$(gobump show -r)
 REVISION:=$(shell git rev-parse --short HEAD)
 LDFLAGS:="-X main.revision=$(REVISION)"
 
 export GO111MODULE=on
+
+# Initialize a project
+init:
+	go mod init $(PROJECT_PATH)
 
 # Install development tools
 devtools:
@@ -63,4 +68,4 @@ clean:
 	go clean
 	rm -rf bin/*
 
-.PHONY: devtools gotools init deps fmt lint test help clean
+.PHONY: init devtools gotools deps build fmt lint test doc help clean
