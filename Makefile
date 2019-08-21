@@ -34,7 +34,7 @@ gotools:
 				golang.org/x/tools/cmd/gopls
 
 # Install dependencies
-deps:
+deps: fmt
 	go get -v -d
 
 # Build programs
@@ -45,19 +45,19 @@ build: bin/myprof
 
 # Format Files
 fmt:
-	goimports -w ./cmd
+	goimports -w ./cmd ./utils
 
 # Run Lint
 lint: deps
-	go vet ./cmd/...
-	golint -set_exit_status ./cmd/...
+	go vet ./cmd/... ./utils/...
+	golint -set_exit_status ./cmd/... ./utils/...
 
 # Run tests
 test: deps
-	go test -cover -v ./cmd/...
+	go test -cover -v ./cmd/... ./utils/...
 
 doc:
-	go doc -all ./cmd
+	go doc -all ./cmd ./utils
 
 # Show help
 help:
