@@ -8,6 +8,7 @@ import (
 )
 
 const (
+	// Version of software
 	Version = "0.0.1"
 )
 

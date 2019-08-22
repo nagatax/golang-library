@@ -7,12 +7,12 @@ import (
 	"runtime"
 )
 
-// 実行中のOS名を取得する
+// GetOSName 実行中のOS名を取得する
 func GetOSName() string {
 	return runtime.GOOS
 }
 
-// バージョン番号を表示するか判定する
+// IsPrintVersion バージョン番号を表示するか判定する
 func IsPrintVersion(args ...string) bool {
 	var isPrint bool
 
@@ -25,7 +25,7 @@ func IsPrintVersion(args ...string) bool {
 	return isPrint
 }
 
-// バージョン番号を表示する
+// PrintVersion バージョン番号を表示する
 func PrintVersion(version string) {
 	fmt.Println("version:", version)
 }
