@@ -28,3 +28,16 @@ func Testバージョン番号が表示されること(t *testing.T) {
 	actual = IsPrintVersion("-version")
 	assert.Equal(t, expect, actual, "")
 }
+
+func Test乱数が取得できること(t *testing.T) {
+	var expect int64
+	actual := GetRandomSeed()
+	assert.IsType(t, expect, actual, "")
+
+	actual1 := GetRandomSeed()
+	actual2 := GetRandomSeed()
+	actual3 := GetRandomSeed()
+	assert.NotEqual(t, actual1, actual2)
+	assert.NotEqual(t, actual1, actual3)
+	assert.NotEqual(t, actual2, actual3)
+}

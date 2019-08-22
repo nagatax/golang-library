@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"os"
 	"runtime"
+	"time"
 )
 
-// GetOSName 実行中のOS名を取得する
+// GetOSName - 実行中のOS名を取得する
 func GetOSName() string {
 	return runtime.GOOS
 }
 
-// IsPrintVersion バージョン番号を表示するか判定する
+// IsPrintVersion - バージョン番号を表示するか判定する
 func IsPrintVersion(args ...string) bool {
 	var isPrint bool
 
@@ -25,7 +26,12 @@ func IsPrintVersion(args ...string) bool {
 	return isPrint
 }
 
-// PrintVersion バージョン番号を表示する
+// PrintVersion - バージョン番号を表示する
 func PrintVersion(version string) {
 	fmt.Println("version:", version)
+}
+
+// GetRandomNum - 乱数生成時に使用するシード値を取得する
+func GetRandomSeed() int64 {
+	return time.Now().UnixNano()
 }
