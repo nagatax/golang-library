@@ -31,7 +31,7 @@ func PrintVersion(version string) {
 	fmt.Println("version:", version)
 }
 
-// GetRandomNum - 乱数生成時に使用するシード値を取得する
+// GetRandomSeed - 乱数生成時に使用するシード値を取得する
 func GetRandomSeed() int64 {
 	return time.Now().UnixNano()
 }
