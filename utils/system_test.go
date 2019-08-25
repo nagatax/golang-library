@@ -1,3 +1,5 @@
+// +build uint
+
 package utils
 
 import (

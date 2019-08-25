@@ -54,7 +54,8 @@ lint: deps
 
 # Run tests
 test: deps
-	go test -cover -v ./cmd/... ./utils/...
+	go test -tags=uint -cover -v ./cmd/... ./utils/...
+	go test -tags=integration -cover -v ./cmd/... ./utils/...
 
 doc:
 	go doc -all ./cmd ./utils
