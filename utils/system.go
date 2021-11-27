@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"runtime"
 	"time"
 )
@@ -35,4 +36,9 @@ func PrintVersion(version string) {
 // GetRandomSeed - 乱数生成時に使用するシード値を取得する
 func GetRandomSeed() int64 {
 	return time.Now().UnixNano()
+}
+
+// JoinFilePath - ファイルパスを結合する
+func JoinFilePath(elem []string) string {
+	return filepath.Join(elem...)
 }

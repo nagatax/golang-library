@@ -4,6 +4,7 @@
 package utils
 
 import (
+	"path/filepath"
 	"runtime"
 	"testing"
 	"time"
@@ -46,4 +47,10 @@ func Test乱数が取得できること(t *testing.T) {
 	assert.NotEqual(t, actual1, actual2)
 	assert.NotEqual(t, actual1, actual3)
 	assert.NotEqual(t, actual2, actual3)
+}
+
+func Test結合したファイルパスが取得できること(t *testing.T) {
+	separator := string(filepath.Separator)
+	actual := JoinFilePath([]string{"a", "b", "c"})
+	assert.Equal(t, actual, "a"+separator+"b"+separator+"c")
 }
