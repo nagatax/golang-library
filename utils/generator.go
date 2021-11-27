@@ -1,3 +1,4 @@
+// Package utils generator
 package utils
 
 // GenerateInteger 整数を取得する

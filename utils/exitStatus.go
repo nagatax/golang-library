@@ -1,3 +1,4 @@
+// Package utils exitStatus
 package utils
 
 // ExitStatus is exit code

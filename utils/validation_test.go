@@ -1,3 +1,4 @@
+//go:build uint
 // +build uint
 
 package utils

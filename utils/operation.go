@@ -1,3 +1,4 @@
+// Package utils operation
 package utils
 
 // Div 除算結果を取得する

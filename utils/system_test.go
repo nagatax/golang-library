@@ -1,3 +1,4 @@
+//go:build uint
 // +build uint
 
 package utils
@@ -5,6 +6,7 @@ package utils
 import (
 	"runtime"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -37,7 +39,9 @@ func Test乱数が取得できること(t *testing.T) {
 	assert.IsType(t, expect, actual, "")
 
 	actual1 := GetRandomSeed()
+	time.Sleep(time.Millisecond)
 	actual2 := GetRandomSeed()
+	time.Sleep(time.Millisecond)
 	actual3 := GetRandomSeed()
 	assert.NotEqual(t, actual1, actual2)
 	assert.NotEqual(t, actual1, actual3)
