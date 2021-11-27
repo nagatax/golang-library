@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.12
+      - image: circleci/golang:1.17
     working_directory: /go/src/github.com/nagatax/golang-library
     steps:
       - checkout
@@ -18,8 +18,6 @@ jobs:
       - run: make gotools
       - run: make lint
       - run: make test
-      #      - run: curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s
-      #      - run: ./vendor/bin/phpcs --standard=./phpcs_custom_ruleset.xml | ./bin/reviewdog -f=phpstan -reporter=github-pr-review
 workflows:
   version: 2
   workflow:
