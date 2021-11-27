@@ -7,15 +7,14 @@ LDFLAGS:="-X main.revision=$(REVISION)"
 
 export GO111MODULE=on
 
-# Initialize a project
+## Initialize a project
 init:
 	go mod init $(PROJECT_PATH)
 
-# Install development tools
+## Install development tools
 devtools:
 	GO111MODULE=off \
-				go get github.com/motemen/ghq \
-				github.com/motemen/gore/cmd/gore \
+				go get github.com/motemen/gore/cmd/gore \
 				github.com/k0kubun/pp \
 				github.com/mdempsky/gocode \
 				github.com/rogpeppe/godef \
@@ -23,7 +22,7 @@ devtools:
 				github.com/motemen/gobump/cmd/gobump \
 				github.com/Songmu/make2help/cmd/make2help
 
-# Install go tools
+## Install go tools
 gotools:
 	GO111MODULE=off \
 				go get golang.org/x/lint/golint \
@@ -31,40 +30,39 @@ gotools:
 				golang.org/x/tools/cmd/goimports \
 				golang.org/x/tools/cmd/gorename \
 				golang.org/x/tools/cmd/guru \
-				golang.org/x/tools/cmd/gopls
+				golang.org/x/tools/gopls
 
-# Install dependencies
+## Install dependencies
 deps: fmt
-	go get -v -d
+	go mod tidy
 
-# Build programs
+## Build programs
 bin/%: cmd/%/main.go deps
 	go build -ldflags $(LDFLAGS) -o $@ $<
 
-build: bin/myprof
-
-# Format Files
+## Format Files
 fmt:
 	goimports -w ./cmd ./utils
 
-# Run Lint
+## Run Lint
 lint: deps
 	go vet ./cmd/... ./utils/...
-	golint -set_exit_status ./cmd/... ./utils/...
+	golint -set_exit_status -min_confidence=0.1 ./cmd/... ./utils/...
 
-# Run tests
+## Run tests
 test: deps lint
 	go test -tags=uint -cover -v ./cmd/... ./utils/...
 	go test -tags=integration -cover -v ./cmd/... ./utils/...
 
+## Show docs
 doc:
 	go doc -all ./cmd ./utils
 
-# Show help
+## Show help
 help:
 	@make2help $(MAKEFILE_LIST)
 
-# Clean files
+## Clean files
 clean:
 	go clean
 	rm -rf bin/*
